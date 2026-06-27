@@ -25,21 +25,26 @@ length, employment length, and loan purpose.
 
 | Model | ROC-AUC | Recall (default) | Precision (default) |
 |---|---|---|---|
-| Logistic Regression | 0.705 | 0.30 | 0.41  |
+| Logistic Regression | 0.705 | 0.30 | 0.41 |
 | Random Forest | 0.695 | 0.19 | 0.43 |
 | XGBoost | 0.700 | 0.15 | 0.46 |
 
-**XGBoost performed best**, with the strongest ROC-AUC and recall on the
-default class — meaning it catches more actual defaults than the other models,
-which matters more to a lender than raw accuracy.
+**Logistic Regression was selected as the final model.** Although the tree-based
+models achieved slightly higher overall accuracy, this is misleading on an
+imbalanced dataset: they do so by predicting "repaid" more aggressively,
+missing the majority of actual defaults. Logistic Regression achieved both the
+highest ROC-AUC (0.705) and the highest recall on defaults (30%, vs. 15-19%
+for the tree models) — directly more useful for a lender, since the cost of
+missing a default is typically much higher than the cost of a false alarm.
+
+
 
 ### Feature Importance
 ![Feature Importance](feature_importance.png)
 
-**Key takeaway:** [your finished sentence from Step 2 — e.g. "The biggest
-predictors of default are interest rate, open_acc, and pub_rec,
-which makes sense because these directly reflect a borrower's existing
-financial strain and how risky LendingClub already judged them to be."]
+**Key takeaway:** Feature importance was examined using the XGBoost model for
+interpretability, even though Logistic Regression was ultimately selected as
+the final model based on its stronger recall on defaults.
 
 ## 💼 Business Takeaway
 A model like this lets a lender flag higher-risk applications for closer review
